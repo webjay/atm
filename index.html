@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Automated Teller Machine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      padding: 10px;
+    }
+    fieldset {
+      margin-top: 20px;
+    }
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .columns {
+      flex-direction: column;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    input[type=number] {
+      text-align: right;
+    }
+    output[id=json] {
+      white-space: pre;
+    }
+  </style>
+  <script src="atm.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="columns">
+      <h1>Automated Teller Machine</h1>
+      <form>
+        <fieldset>
+          <p class="row">
+            <label for="amount">Amount</label>
+            <input id="amount" type="number" min="0" required autofocus />
+          </p>
+        </fieldset>
+        <fieldset>
+          <legend>Result</legend>
+          <p class="row">
+            <label for="notes1000">Notes 1000</label>
+            <output id="notes1000" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="notes500">Notes 500</label>
+            <output id="notes500" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="notes200">Notes 200</label>
+            <output id="notes200" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="notes100">Notes 100</label>
+            <output id="notes100" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="notes50">Notes 50</label>
+            <output id="notes50" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="coins20">Coins 20</label>
+            <output id="coins20" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="coins10">Coins 10</label>
+            <output id="coins10" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="coins5">Coins 5</label>
+            <output id="coins5" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="coins2">Coins 2</label>
+            <output id="coins2" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="coins1">Coins 1</label>
+            <output id="coins1" aria-live="polite">0</output>
+          </p>
+        </fieldset>
+        <fieldset>
+          <legend>Payout</legend>
+          <p class="row">
+            <label for="notes">Notes</label>
+            <output id="notes" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="coinsGt20">Coins &gt; 20mm</label>
+            <output id="coinsGt20" aria-live="polite">0</output>
+          </p>
+          <p class="row">
+            <label for="coinsLt20">Coins &lt;= 20mm</label>
+            <output id="coinsLt20" aria-live="polite">0</output>
+          </p>
+        </fieldset>
+        <fieldset>
+          <legend>JSON</legend>
+          <p>
+            <output id="json"></output>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
