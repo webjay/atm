@@ -95,7 +95,7 @@ function output(cashOut) {
 }
 
 function amountToCash(amount) {
-  if (typeof amount !== 'number' || amount < 0) return [];
+  if (typeof amount !== 'number' || Number.isNaN(amount) || amount < 0) return [];
   const result = [];
   let sum = 0;
   while (sum !== amount) {
