@@ -1,6 +1,6 @@
 const amountToCash = require('./atm.js');
 
-const tests = [578, 100, 123, 1543];
+const tests = [578, 100, 123, 1543, 0, -10, '5'];
 
 function validator(amount, result) {
   return amount === result.reduce((acc, { value }) => acc += value, 0);
