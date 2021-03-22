@@ -1,4 +1,6 @@
-const cash = [
+const nf = new Intl.NumberFormat();
+
+const cashItems = [
   { 
     el: 'notes1000',
     value: 1000,
@@ -60,57 +62,61 @@ function setElementValue(el, value) {
   document.getElementById(el).innerHTML = value;
 }
 
+function resultSum(result) {
+  return result.reduce((acc, { cash: { value }, count }) => acc += value * count, 0);
+}
+
 function output(cashOut) {
-  const elCount = {};
   // reset & init
   setElementValue('notes', 0);
   setElementValue('coinsGt20', 0);
   setElementValue('coinsLt20', 0);
-  cash.forEach(({ el }) => {
-    elCount[el] = 0;
+  cashItems.forEach(({ el }) => {
     setElementValue(el, 0);
   });
   setElementValue('json', JSON.stringify(cashOut, null, '  '));
   // populate Result
-  cashOut.forEach(({ el }) => {
-    setElementValue(el, ++elCount[el]);
+  cashOut.forEach(({ cash: { el }, count }) => {
+    setElementValue(el, count);
   });
+  setElementValue('sum', nf.format(resultSum(cashOut)));
   // populate Payout
   const elCountTypes = {
-    note: 0,
+    notes: 0,
     coinsGt20: 0,
     coinsLt20: 0,
   };
-  cashOut.forEach(({ type, width }) => {
-    if (type === 'note') {
-      setElementValue('notes', ++elCountTypes['note']);
-    } else {
-      if (width > 20) {
-        setElementValue('coinsGt20', ++elCountTypes['coinsGt20']);
-      } else {
-        setElementValue('coinsLt20', ++elCountTypes['coinsLt20']);
-      }
-    }
+  cashOut.forEach(({ cash: { type, width }, count }) => {
+    const typeCash = type === 'note' ? 'notes' : width > 20 ? 'coinsGt20' : 'coinsLt20';
+    elCountTypes[typeCash] += count;
+    setElementValue(typeCash, elCountTypes[typeCash]);
   });
-}
-
-function amountToCash(amount) {
-  if (typeof amount !== 'number' || Number.isNaN(amount) || amount < 0) return [];
-  const result = [];
-  let sum = 0;
-  while (sum !== amount) {
-    const diff = amount - sum;
-    result.push(cash.find(({ value }) => {
-      if (value > diff) return false;
-      sum += value;
-      return true;
-    }));
-  }
-  return result;
 }
 
 function toInt(value) {
   return parseInt(value, 10);
+}
+
+function amountValid(amount) {
+  return typeof amount === 'number' && Number.isNaN(amount) === false && amount > 0 && amount <= Number.MAX_SAFE_INTEGER;
+}
+
+function amountToCash(amount) {
+  if (amountValid(amount) === false) return [];
+  const result = [];
+  let sum = 0;
+  while (sum !== amount) {
+    const diff = amount - sum;
+    cashItems.some((cash) => {
+      const { value } = cash;
+      if (value > diff) return false;
+      const count = toInt(diff / value);
+      sum += value * count;
+      result.push({ count, cash });
+      return true;
+    });
+  }
+  return result;
 }
 
 function inputEventListener({ target: { value: valueStr } }) {
@@ -125,5 +131,5 @@ function onLoad() {
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', onLoad);
 } else {
-  module.exports = amountToCash;
+  module.exports = { amountToCash, resultSum };
 }

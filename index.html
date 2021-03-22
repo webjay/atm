@@ -43,7 +43,7 @@
         <fieldset>
           <p class="row">
             <label for="amount">Amount</label>
-            <input id="amount" type="number" min="0" required autofocus />
+            <input id="amount" type="number" min="0" max="9007199254740992" required autofocus />
           </p>
         </fieldset>
         <fieldset>
@@ -105,7 +105,14 @@
           </p>
         </fieldset>
         <fieldset>
-          <legend>JSON</legend>
+          <legend>Sum</legend>
+          <p class="row">
+            <span></span>
+            <output id="sum" aria-live="polite">0</output>
+          </p>
+        </fieldset>
+        <fieldset>
+          <legend>JSON receipt</legend>
           <p>
             <output id="json"></output>
           </p>

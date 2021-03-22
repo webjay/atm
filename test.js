@@ -1,10 +1,10 @@
-const amountToCash = require('./atm.js');
+const { amountToCash, resultSum } = require('./atm.js');
 
 const timeLabel = 'Time';
-const tests = [578, 100, 123, 1543, 0, -10, '5'];
+const tests = [578, 100, 123, 1543, 0, -10, '5', Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER + 1];
 
 function validator(amount, result) {
-  return amount === result.reduce((acc, { value }) => acc += value, 0);
+  return amount === resultSum(result);
 }
 
 function test(amount) {
