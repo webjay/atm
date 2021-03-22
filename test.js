@@ -1,5 +1,6 @@
 const amountToCash = require('./atm.js');
 
+const timeLabel = 'Time';
 const tests = [578, 100, 123, 1543, 0, -10, '5'];
 
 function validator(amount, result) {
@@ -22,9 +23,11 @@ function output(result) {
 
 const args = process.argv[2];
 
+console.time(timeLabel);
 if (args !== undefined) {
   const amount = parseInt(args, 10);
   output(test(amount));
 } else {
   output(runTests());
 }
+console.timeEnd(timeLabel);
