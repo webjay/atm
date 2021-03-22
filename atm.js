@@ -95,17 +95,17 @@ function output(cashOut) {
 }
 
 function amountToCash(amount) {
-  if (amount === 0) return [];
+  if (typeof amount !== 'number' || amount < 0) return [];
   const result = [];
   let sum = 0;
-  do {
+  while (sum !== amount) {
     const diff = amount - sum;
     result.push(cash.find(({ value }) => {
       if (value > diff) return false;
       sum += value;
       return true;
     }));
-  } while (sum !== amount);
+  }
   return result;
 }
 
